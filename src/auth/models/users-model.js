@@ -22,7 +22,7 @@ users.methods.generateToken = function () {
   return token;
 }
 
-// Works without an instace, ie. users.validateBasic()
+// Works without an instance, ie. users.validateBasic()
 users.statics.validateBasic = async function (username, password) {
 
   // Look up the user by the username

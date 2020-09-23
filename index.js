@@ -3,7 +3,7 @@
 // dependencies
 require('dotenv').config();
 let mongoose = require('mongoose');
-let server = require('./server.js');
+const server = require('./src/server.js');
 
 // connect to mongo
 mongoose.connect(process.env.MONGODB_URI, {

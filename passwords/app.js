@@ -27,10 +27,10 @@ isValid(password, h1);
 
 async function encrypt(word) {
   let hashed = await bcrypt.hash(word, 10);
-  console.log(hashed);
+  console.log(hashed, 'hashed password');
 }
 
 async function isValid(password, hash) {
   let valid = await bcrypt.compare(password, hash);
-  console.log(valid);
+  console.log(valid, 'valid password');
 }
