@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const secret = "sauce";
+// const secret = "sauce";
 
 const users = mongoose.Schema({
   username: { type: String, required: true },
@@ -18,7 +18,10 @@ users.pre('save', async function () {
 
 // Works with an instance, ie. userRecord.generateToken()
 users.methods.generateToken = function () {
-  let token = jwt.sign({ username: this.username }, secret)
+  let tokenObject = {
+    username: this.username,
+  }
+  let token = jwt.sign(tokenObject, process.env.SECRET)
   return token;
 }
 
@@ -33,7 +36,16 @@ users.statics.validateBasic = async function (username, password) {
 
   if (isValid) { return user; }
   else { return undefined; }
+}
 
+users.statics.validateWithToken = async function (token) {
+  try {
+    const parsedToken = jwt.verify(token, process.env.SECRET);
+    const user = this.findOne({ username: parsedToken.username })
+    return user;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 }
 
 module.exports = mongoose.model('users', users);

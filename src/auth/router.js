@@ -4,11 +4,11 @@ const express = require('express');
 const basicAuth = require('./middleware/basic.js');
 const users = require('./models/users-model.js');
 const router = express.Router();
+const bearer = require('./middleware/bearer.js');
 
 
 
 router.post('/signup', async (req, res, next) => {
-
   try {
     // username, password, email, etc ..
     // will be on req.body
@@ -39,7 +39,6 @@ router.post('/signup', async (req, res, next) => {
 
 });
 
-
 router.post('/signin', basicAuth, async (req, res, next) => {
   let obj = {
     token: req.token,
@@ -48,5 +47,9 @@ router.post('/signin', basicAuth, async (req, res, next) => {
   res.status(200).send(obj);
 
 });
+
+router.get('/secret', bearer, (req, res, next) => {
+  res.status(200).send(`Welcome, ${req.user.username}`)
+})
 
 module.exports = router;
