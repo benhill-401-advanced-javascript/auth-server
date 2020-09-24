@@ -1,11 +1,11 @@
 'use strict';
 
 const express = require('express');
-const basicAuth = require('./middleware/basic.js');
 const users = require('./models/users-model.js');
-const router = express.Router();
+const basicAuth = require('./middleware/basic.js');
 const bearer = require('./middleware/bearer.js');
-
+const oauth = require('./middleware/oauth.js');
+const router = express.Router();
 
 
 router.post('/signup', async (req, res, next) => {
@@ -31,12 +31,9 @@ router.post('/signup', async (req, res, next) => {
 
     // Prove it
     res.status(201).send(token);
-
-
   } catch (err) {
     next(err.message);
   }
-
 });
 
 router.post('/signin', basicAuth, async (req, res, next) => {
@@ -45,11 +42,16 @@ router.post('/signin', basicAuth, async (req, res, next) => {
     user: req.user
   }
   res.status(200).send(obj);
-
 });
 
 router.get('/secret', bearer, (req, res, next) => {
   res.status(200).send(`Welcome, ${req.user.username}`)
 })
+
+// you need to bring in oath and use .put probably or something
+router.get('/oauth', oauth, bearer, (req, res, next) => {
+  res.status(200).send(`User ID present, ${req.user.username}`)
+})
+//create/update a local user account in our db, and return an object with a re-authentication/bearer token and the user object
 
 module.exports = router;
