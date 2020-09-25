@@ -4,7 +4,7 @@ const express = require('express');
 const users = require('./models/users-model.js');
 const basicAuth = require('./middleware/basic.js');
 const bearer = require('./middleware/bearer.js');
-const oauth = require('./middleware/oauth.js');
+const oAuth = require('./middleware/oauth.js');
 const router = express.Router();
 
 
@@ -49,7 +49,7 @@ router.get('/secret', bearer, (req, res, next) => {
 })
 
 // you need to bring in oath and use .put probably or something
-router.get('/oauth', oauth, bearer, (req, res, next) => {
+router.get('/oauth', oAuth, (req, res, next) => {
   res.status(200).send(`User ID present, ${req.user.username}`)
 })
 //create/update a local user account in our db, and return an object with a re-authentication/bearer token and the user object

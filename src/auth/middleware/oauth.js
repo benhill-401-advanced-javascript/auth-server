@@ -1,6 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
+const users = require('../models/users-model.js');
 
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
@@ -54,7 +55,10 @@ async function getRemoteUser(token) {
 }
 
 async function getLocalUser(userId) {
-  // Is this userId in our mongo database?
+  let findUserId = await
+    // Is this userId in our mongo database?
+    users.findById(userId)
+
   // if not, add it
   // username: userId
   // password: Math.random()
