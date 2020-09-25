@@ -1,6 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
+
 const users = require('../models/users-model.js');
 
 const CLIENT_ID = process.env.CLIENT_ID
@@ -23,9 +24,10 @@ module.exports = async (req, res, next) => {
   console.log('(3)', remoteUser);
 
   //Connect with database
-  let localUser = await getLocalUser(remoteUser.login);
+  let localUser = await getLocalUse(remoteUser.login);
   console.log('(4)', localUser);
-
+  req.user = localUser.user;
+  req.token = localUser.token;
   next();
 }
 
@@ -57,12 +59,27 @@ async function getRemoteUser(token) {
 async function getLocalUser(userId) {
   let findUserId = await
     // Is this userId in our mongo database?
-    users.findById(userId)
-
+    users.findById({ username: userId });
   // if not, add it
-  // username: userId
-  // password: Math.random()
-  // users.save()
+  if (!findUserId) {
+    let obj = {
+      username: userId,
+      password: Math.random()
+    }
+    let record = new users(obj);
+    let newUser = await record.save();
+    let token = record.generateToken();
+    let output = {
+      user: newUser,
+      token: token
+    }
+    return output;
+  } else {
+    let output = {
+      user: findUserId.username,
+      token: findUserId.generateToken()
+    }
+  }
   // store a hashed Password
 
   // i.e. users.createOrUpdateFromOauth(userId).then() ...
