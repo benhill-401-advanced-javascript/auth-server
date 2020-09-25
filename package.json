@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
-    "test-watch": "jest --watchAll",
-    "test": "jest"
+    "test": "jest --verbose --coverage"
   },
   "repository": {
     "type": "git",
@@ -24,6 +21,7 @@
     "@code-fellows/supergoose": "^1.0.11",
     "base-64": "^0.1.0",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "cwd": "^0.10.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

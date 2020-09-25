@@ -11,6 +11,7 @@ const modelFinder = require(`${cwd}/middleware/model-finder.js`);
 const router = express.Router();
 const bearer = require('../auth/middleware/bearer.js');
 const permissions = require('../auth/middleware/acl.js');
+
 // Evaluate the model, dynamically
 router.param('model', modelFinder.load);
 // Models List

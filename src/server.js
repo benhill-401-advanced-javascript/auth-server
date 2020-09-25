@@ -2,7 +2,7 @@
 
 const express = require('express');
 const base64 = require('base-64');
-//do you need to bring in cors, bruh?
+const cors = require('cors');
 
 // const users = require('./auth/models/users-model.js');
 const router = require('./auth/router.js');
@@ -13,6 +13,7 @@ const errorHandler = require('../middleware/500.js');
 const app = express();
 
 // global middleware
+app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
