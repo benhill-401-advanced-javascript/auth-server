@@ -58,40 +58,40 @@ async function handleGetAll(request, response, next) {
       results: list,
     };
     response.status(200).json(output);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }
 async function handleGetOne(request, response, next) {
   try {
     let result = await request.model.get({ _id: request.params.id });
     response.status(200).json(result[0]);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }
 async function handlePost(request, response, next) {
   try {
     let result = await request.model.create(request.body);
     response.status(200).json(result);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }
 async function handlePut(request, response, next) {
   try {
     let result = await request.model.update(request.params.id, request.body);
     response.status(200).json(result);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }
 async function handleDelete(request, response, next) {
   try {
     let result = await request.model.delete(request.params.id);
     response.status(200).json(result);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }
 module.exports = router;
