@@ -2,5 +2,5 @@
 
 module.exports = (req, res, next) => {
   let err = { error: 'Resource Not Found' };
-  res.status(404).json(err)
+  res.status(404).send(err)
 }
