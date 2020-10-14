@@ -3,9 +3,12 @@
 const express = require('express');
 const base64 = require('base-64');
 const cors = require('cors');
+const chalk = require('chalk');
 
-// const users = require('./auth/models/users-model.js');
+// Auth router and api router
+// const apiRouter = require('../api/v2.js');
 const router = require('./auth/router.js');
+router = require('../api/v2.js');
 
 const notFoundHandler = require('../middleware/404.js');
 const errorHandler = require('../middleware/500.js');
@@ -18,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Route definitions
+// app.use(apiRouter);
 app.use(router);
 
 // 404 / not found handler
